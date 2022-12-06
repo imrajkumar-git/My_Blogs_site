@@ -1,0 +1,59 @@
+{% extends 'base.html' %}
+
+{% block title %}Create new account{% endblock title %}
+
+{% block content %}
+<u><h1 class="Register" style="text-align: center;">Register</h1></u>
+<div class="container my-2">
+
+<form method="post">
+    {% csrf_token %}
+    <div class="row">
+            <div class="col-md-6">
+                <label for="fname" class="form-label">First Name</label>
+                {{form.first_name}}
+            </div>
+            <div class="col-md-6">
+                <label for="lname" class="form-label">Last Name</label>
+                {{form.last_name}}
+            </div>
+            <div class="col-6">
+                <label for="username" class="form-label">Username</label>
+                {{form.username}}
+            </div>
+            <div class="col-6">
+                <label for="inputAddress2" class="form-label">E-mail</label>
+                {{form.email}}
+            </div>
+           
+            <div class="col-6">
+                <label for="password" class="form-label">Password</label>
+                {{form.password1}}
+            </div>
+            <div class="col-6">
+                <label for="confirm password" class="form-label">Confirm password</label>
+                {{form.password2}}
+            </div>
+        </div>
+        <h4 class="mt-4">Rules</h4>
+        <ul class="list-group">
+          <li class="list-group-item">1. Your password can’t be too similar to your other personal information.</li>
+          <li class="list-group-item">2. Your password must contain at least 8 characters.</li>
+          <li class="list-group-item">3. Your password can’t be a commonly used password.</li>
+          <li class="list-group-item">4. Your password can’t be entirely numeric.</li>
+        </ul>
+        <button type="submit" class="btn btn-primary mt-3">Create User</button>
+    </form>
+    </div>
+    <div  style="text-align: center;">
+
+       <h5 style="text-align: center;" class="data">If you are already registered please login </h5>
+       <br>
+       <a 
+        aria-current="page" style="align-items: center;" href="{% url 'login' %}">      
+          <button class="btn btn-lg btn-success" style="align-items: center;" type="submit">Login</button>
+    </a>
+
+    </div>
+  
+{% endblock content %}

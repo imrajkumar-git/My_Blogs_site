@@ -1,0 +1,65 @@
+{% extends 'base.html' %}
+{% load crispy_forms_tags %}
+
+{% block title %}Update Blog{% endblock title %}
+
+{% block content %}
+<div class="container my-2">
+
+    <form method="post"  enctype="multipart/form-data">
+        {% csrf_token %}
+        <div>
+            {{form.Blog_category|as_crispy_field}}
+    
+        </div>
+    <div>
+        {{form.name|as_crispy_field}}
+    </div>       
+            <div>
+                {{form.blogs_image|as_crispy_field}}
+            </div>
+            <div>
+                {{form.mini_description|as_crispy_field}}
+    
+            </div>
+            <div>
+                {{form.description}}
+    
+            </div>
+            <div>
+                {{form.author}}
+    
+            </div>
+            <div>
+                {{form.slug}}
+    
+            </div>
+            <div>
+                {{form.comment_date}}
+    
+            </div>
+            <div>
+                {{form.post_date}}
+    
+            </div>
+            <div>
+                {{form.read}}
+    
+            </div>
+            <div>
+                {{form.is_verified}}
+    
+            </div>
+            <div>
+                {{form.is_popular}}
+    
+            </div>
+        <!-- {{form.as_p}} -->
+        <button type="submit" class="btn btn-success">Post blog</button>
+    </form>
+    </div>
+<script>
+    var name = "{{ user.id }}"
+    document.getElementById("author").value = name;
+</script>
+{% endblock content %}

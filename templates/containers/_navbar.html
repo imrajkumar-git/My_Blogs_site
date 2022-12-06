@@ -1,0 +1,162 @@
+<!-- <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <div class="container-fluid">
+        <a class="hamro navbar-brand" href="{% url 'home' %}">Technical BLOG</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+            data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
+            aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                <li class="nav-item">
+                    <a 
+                    {% if request.path == "/" %}
+                        class="nav-link active" 
+                    {% else %}
+                    class="nav-link"
+                    {% endif %}
+                    aria-current="page" href="{% url 'home' %}"><i class="fa-solid fa-house"></i> Home</a>
+                </li>
+
+                <li class="nav-item">
+                    <a 
+                    {% if request.path == "/contact_us/" %}
+                        class="nav-link active" 
+                    {% else %}
+                        class="nav-link" 
+                    {% endif %}
+                    href="{% url 'contact_us' %}"><i class="fa-solid fa-address-book"></i> Contact Us</a>
+                </li>
+            </ul>
+        </div>
+        <ul class="navbar-nav mb-2 mb-lg-0">
+            {% if user.is_authenticated %}
+            <div class="btn-group dropstart">
+                <button type="button" class="btn btn-secondary dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+                    <i class="fa-solid fa-user"></i> {{user.username}}
+                </button>
+                <ul class="dropdown-menu dropdown-menu-dark">
+                    <li>
+                        <a class="dropdown-item" href="{% url 'profile' user.username %}">
+                            {{user.first_name}} {{user.last_name}} <br> @{{user.username}}
+                        </a>
+                    </li>
+                    <li><hr class="dropdown-divider"></li>
+                    <li>
+                        <a class="dropdown-item" href="{% url 'dashboard' %}"><i class="fa-solid fa-chart-line"></i> Dashboard</a>
+                    </li>
+                    <li><a class="dropdown-item" href="{% url 'create-blog' %}"><i class="fa-solid fa-pen-to-square"></i> Create Blog</a></li>
+                    <li>
+                        <a class="dropdown-item" href="{% url 'user_public_details' %}"><i class="fa-solid fa-gear"></i> Settings</a>
+                    </li>
+                    <li><hr class="dropdown-divider"></li>
+                    <li><a class="dropdown-item" href="{% url 'logout' %}"><i class="fa-solid fa-right-from-bracket"></i> Sign out</a></li>
+                </ul>
+              </div>
+            {% else %}
+            <li class="nav-item">
+                <a 
+                {% if request.path == "/authors/login/" %}
+                    class="nav-link active" 
+                {% else %}
+                    class="nav-link" 
+                {% endif %}
+                aria-current="page" href="{% url 'login' %}"> <i class="fa-solid fa-arrow-right-to-bracket"></i> Login</a>
+            </li>
+            <li class="nav-item">
+                <a 
+                {% if request.path == "/authors/create-new-account/" %}
+                    class="nav-link active" 
+                {% else %}
+                    class="nav-link" 
+                {% endif %}
+                aria-current="page" href="{% url 'register' %}"><i class="fa-solid fa-user-plus fa-lg"></i> Signup</a>
+            </li>
+            {% endif %}
+        </ul>
+        </div>
+    </div>
+</nav> -->
+
+<nav class="navbar navbar-expand-lg">
+      <a class="navbar-brand" href="{% url 'home' %}"><h2>Hiapproach Blogs<em>.</em></h2></a>
+     <!-- <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>  -->
+      <ul class="small-ul">
+        <li class="nav-item active">
+          <a style="
+          color: black;
+          font-size: 12px;
+      "class="nav-link" aria-current="page" href="{% url 'home' %}"><i class="fa-solid fa-house"></i> Home</a>
+        </li> 
+     
+        <li class="nav-item">
+          <a class="nav-link" 
+          style="
+          color: black;
+       
+          font-size: 12px;
+      "
+          href="{% url 'contact_us' %}"><i class="fa-solid fa-address-book"></i> Contact Us</a></li>
+          </ul>
+    
+     
+      <div class="collapse navbar-collapse" >
+        <ul class="navbar-nav ml-auto">
+          <li class="nav-item active">
+            <a class="nav-link" aria-current="page" href="{% url 'home' %}"><i class="fa-solid fa-house"></i> Home</a>
+          </li> 
+       
+          <li class="nav-item" style="color: black;">
+            <a 
+          
+                class="nav-link" 
+        
+            href="{% url 'contact_us' %}"><i class="fa-solid fa-address-book"></i> Contact Us</a></li>
+            </ul>
+        </div>
+        <div class="nb">
+            <ul class="navbar-nav mb-2 mb-lg-0">
+                {% if user.is_authenticated %}
+                <div class="btn-group dropstart">
+                    <button type="button" class="btn-secondary dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+                        <i class="fa-solid fa-user"></i>Hello! {{user.username}}
+                    </button>
+                    <ul class="dropdown-menu dropdown-menu-dark bg-dark">
+                        <li>
+                            <a class="dropdown-item" href="{% url 'profile' user.username %}">
+                                <i class="fa-solid fa-user"></i>  {{user.first_name}} {{user.last_name}} Profile
+                            </a>
+                        </li>
+                        <li><hr class="dropdown-divider"></li>
+                    
+                        <li>
+                            <a class="dropdown-item" href="{% url 'dashboard' %}"><i class="fa-solid fa-chart-line"></i> Dashboard</a>
+                        </li>
+                        <li><a class="dropdown-item" href="{% url 'create-blog' %}"><i class="fa-solid fa-pen-to-square"></i> Create Blog</a></li>
+                        <li>
+                            <a class="dropdown-item" href="{% url 'user_public_details' %}"><i class="fa-solid fa-gear"></i> Settings</a>
+                        </li>
+                        <li><hr class="dropdown-divider"></li>
+                        <li><a class="dropdown-item" href="{% url 'logout' %}"><i class="fa-solid fa-right-from-bracket"></i> Sign out</a></li>
+                    </ul>
+                  </div>
+                {% else %}
+           
+                <li class="nav-item">
+                    <a 
+                    {% if request.path == "/authors/create-new-account/" %}
+                        class="nav-link active" 
+                    {% else %}
+                        class="nav-link" 
+                    {% endif %}
+                    aria-current="page" href="{% url 'register' %}"><i class="fa-solid fa-user-plus fa-lg"></i> Signup</a>
+                </li>
+                {% endif %}
+            </ul>
+
+        </div>
+         
+        </ul>
+  </nav>

@@ -1,0 +1,267 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}Blog Home{% endblock title %}
+{% block content %}
+
+<div class="main-banner header-text">
+  <div class="container-fluid">
+    <div class="owl-banner owl-carousel">
+
+      {% for data in blogscat%}
+
+      <div class="item">
+        {% if data.images %}
+
+        <img src="{{data.images.url}}" alt="hello">
+        {% else %}
+        <img src="{% static 'assets/images/about-us.jpg' %}" alt="">
+        {%endif%}
+        <div class="item-content">
+          <div class="main-content">
+            <div class="meta-category">
+              <a href="/?category={{data.id}}"> <button  value="submit"  style="background-color:#010101; width: 300px;"><span>{{data.name}} Related Blogs</span></button></a>
+            </div>
+
+          </div>
+        </div>
+      </div>
+
+      {%endfor%}
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+<section class="blog-posts">
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-8">
+        <div class="all-blog-posts">
+          <div class="row">
+
+            <div class="mobilesearch sidebar-item searchicon">
+              <form id="search_form" name="gs" method="GET" action="{% url 'search' %}">
+                <input type="text" name="q" placeholder="type to search..." style="
+                  border: 2px solid rebeccapurple;
+                  width: 224px;
+                  height: 36px;
+              "> <button type="submit" class="btn" style="
+                  background-color: aqua;
+                
+                  width: 113px;
+              ">Search</button>
+              </form>
+            </div>
+            <h1 style="text-align: center;">All Blogs</h1>
+
+            <div class="col-lg-12">
+              {{title}}
+
+              {% if blogs %}
+
+              {% for api in blogs%}
+              {% if api.is_verified == 'Verified' %}
+              <div class="blog-post">
+                <div class="blog-thumb">
+                  {% if api.blogs_image %}
+                  <img src="{{api.blogs_image.url}}"alt="">
+                  {%endif%}
+                </div>
+                <div class="down-content">
+                  <ul class="post-info">
+                    <li><a href="#">By: {{api.author.username}}</a>
+                    </li>
+                    <li><a href="#">{{api.comment_date}}</a></li>
+                    {% if cmt in usercomment%}
+                    <li><a href="#">{{cmt.count}} Comments</a></li>
+
+                    {%endif%}
+                    <li><a href="#">{{api.post_date|timesince}}(Ago)</a></li>
+                    <li><a href="#">{{api.read}} <i class="fa-solid fa-eye"></i></a></li>
+
+                    <!-- <li><a href="#"> {{all_comments.blog.id.count}}comments -->
+                    </a></li>
+                  </ul>
+                  <br>
+                  <span>{{api.name}}</span>
+
+
+                  <p>{{api.mini_description}}</p>
+                  <div class="post-options">
+                    <div class="row">
+                      <div class="col-6">
+
+                        <a href="blog_detail/{{api.slug}}"><button type="submit" class="btn" style="
+                          background-color: aqua;
+                        
+                          width: 161px;
+                      ">Read More</button></a>
+                      </div>
+                      <div class="col-6">
+
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              {% else %}
+              <!-- <h2 class="text-danger text-center">on pending</h2> -->
+              {%endif%}
+
+              {%endfor%}
+
+              {% else %}
+              <h2 class="text-danger text-center">No blog found</h2>
+              {% endif %}
+            </div>
+
+
+
+          </div>
+        </div>
+
+        <div class="mt-5">
+          <nav aria-label="Page navigation example">
+
+            <ul class="pagination justify-content-between">
+
+              {% if prev %}
+              <li class="page-item">
+                <a class="page-link" href="/?page={{prev}}">Previous</a>
+              </li>
+              {% else %}
+              <li class="page-item disabled">
+                <a class="page-link">Previous</a>
+              </li>
+              {% endif %}
+
+              {% if nxt %}
+              <li class="page-item">
+                <a class="page-link" href="/?page={{nxt}}">Next</a>
+              </li>
+              {% else %}
+              <li class="page-item disabled">
+                <a class="page-link">Next</a>
+              </li>
+              {% endif %}
+            </ul>
+          </nav>
+        </div>
+      </div>
+      <div class="col-lg-4">
+        <div class="sidebar">
+          <div class="row">
+            <div class="searchbox">
+              <div class="mobilesearch1 sidebar-item searchicon">
+                <form id="search_form" name="gs" method="GET" action="/home" >
+                            <input type="text" name="q" placeholder="type to search..." style="
+                              border: 2px solid rebeccapurple;
+                              width: 212px;
+                              height: 36px;
+                              padding-left: 54px;
+                          "> <button type="submit" class="btn" style="
+                              background-color: aqua;
+                            
+                              width: 113px;
+                          ">Search</button>
+                          </form>
+              </div>
+            </div>
+            <div>
+              <div class="sidebar-item recent-posts">
+                <div class="sidebar-heading">
+                  <h2 class="popularpost" style="text-align: center;">Popular Blogs</h2>
+                  {{title}}
+
+                </div>
+                {% for data in blogs %}
+                {% if data.is_popular == 'True' %}
+
+                <div class="content">
+
+                  {% if data.blogs_image %}
+                  <img src="{{data.blogs_image.url}}"style="width: 400px;padding-top: 35px;"alt="">
+                  {%endif%}
+                  <ul style="display:flex;list-style: none;border-bottom: 2px solid black;padding: 4px;/* padding-left: 4px; */width: 400px; justify-content: space-between;">
+
+                    <li><a href="#" style="
+                      color: #000000;
+                      font-size: 15px;
+                  ">By: {{data.author.username}}</a></li>
+                    <li><a href="#" style="
+                      padding-left: 12px;font-size: 15px;color: black;
+
+                  ">{{data.read}} <i class="fa-solid fa-eye"></i></a></li>
+
+                    <li><a href="#" style="
+                      padding-left: 13px;font-size: 15px;color: black;
+
+                  ">{{data.post_date}}</a></li>
+
+                  </ul>
+                  <a href="blog_detail/{{data.slug}}">
+                    <span style="
+                    color: black;
+                "><p style=" border-bottom: 2px solid black;
+    text-align: center;
+    width: 400px;
+">{{data.name}}</p></span>
+
+                  </a>
+
+
+                </div>
+
+                {% else %}
+                <!-- <h2 class="text-danger text-center">on pending</h2> -->
+
+                {%endif%}
+                {%endfor%}
+              </div>
+            </div>
+
+
+            <div class="col-lg-12">
+              <div class="sidebar-item tags">
+                <div class="sidebar-heading">
+                  <h2 style="text-align: center; padding-top: 30px;">Categories</h2>
+                  {{title}}
+                </div>
+                <div class="content">
+                  <ul>
+                    {% for catsdata in blogscategory %}
+                    <li><a href="/?category={{catsdata.id}}">{{catsdata.name}}</a></li>
+                    {%endfor%}
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<footer>
+  <div class="container">
+    <div class="row">
+
+      <div class="col-lg-12">
+        <div class="copyright-text">
+          <p>Copyright 2022 All Right Reserved!
+
+            | Design & Developed BY: <a rel="nofollow" href="https://rajkumarayal.com.np">Rajkumar Aryal</a></p>
+        </div>
+      </div>
+    </div>
+  </div>
+</footer>
+
+{% endblock content %}

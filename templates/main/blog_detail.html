@@ -1,0 +1,152 @@
+{% extends 'base.html' %}
+{% load humanize %}
+{%load static%}
+{% block title %}{{blog.name}}{% endblock title %}
+{% include 'containers/_navbar.html' %}
+
+{% block content %}
+
+<div class="container my-2">
+
+<dev class="container">
+    <h2 style="
+    font-size: 1.6 rem;
+    font-size: 1.5rem;
+    /* border-bottom: 2px solid black; */
+    padding-bottom: 30px;
+">{{ blog.name }}</h2>
+
+    <div class="row">
+            {{title}}
+           
+        
+                {% if blog.blogs_image %}
+                <img src="{{blog.blogs_image.url}}" class="detailsimage"  alt="">
+                {%endif%}
+                
+            
+                <p>{{blog.description|safe}}</p>
+            </div>
+            <div class="card">
+
+                <div class="card-footer" style="text-align: center;">
+
+                {% if user.is_authenticated %}
+                    {% if user.id == blog.author.id %}
+                    <a class="btn btn-sm btn-info" href="{% url 'UpdateBlogView' blog.id %}"><i class="fa-solid fa-pen-to-square"></i> Edit Blog</a>
+                    <a class="btn btn-sm btn-danger" href="{% url 'DeleteBlogView' blog.id %}"> <i class="fa-solid fa-trash"></i> Delete Blog</a>
+                    {% endif %}
+                {% endif %}
+          
+
+                </div>
+
+          </div>
+            <div class="col">
+                {% if user.is_authenticated %}
+                    {% if blog.author.id == user.id %}
+                        <h3 class="text-center text-warning">You are not allowed to post comment on your own blog</h3>
+                    {% else %}
+                    <h3>Write your comment...</h3>
+                    <form method="post">
+                        {% csrf_token %}
+                        {{form.as_p}}
+                        <button type="submit" class="btn btn-outline-primary">Comment</button>
+                    </form>
+                    {% endif %}
+                {% else %}
+                    <h2 class="text-center text-danger">Please Login to comment on this post <a href="{% url 'login' %}">Login</a></h2>
+                {% endif %}
+            </div>
+        </div>
+      
+        <div class="container my-2">
+
+        <h5  style="
+        margin-left: 95px;
+        margin-bottom: 9px;
+        border-bottom: 2px solid black;
+        width: 243px;
+    ">Total ({{all_comments.count}}) comments</h5>    
+    
+    
+</div>
+
+            <div class="container my-2">
+                {% for comment in all_comments %}
+
+                <div class="col-md-6">
+
+                            <div class="card-body" style="max-width: 477px;">
+                                    <div class="row">
+                                        <div class="col">
+                                            <p> {{ comment.author.first_name }}  {{ comment.author.last_name }} ({{comment.author.username}}) </p>
+                                        </div>
+                
+                                        <div class="col">
+                                            <p class="text-end"><i class="fa-solid fa-clock"></i> {{ comment.comment_date| timesince }} ago</p>
+                                        </div>
+                                    </div>
+                             
+                            <div class="card-footer">
+                                <p>{{comment.description}}</p>
+</div>
+                             
+                          
+                             <!-- <p>{{ comment.description }}</p> -->
+                            </div>
+
+
+                            </div>
+                            {% endfor %}
+
+            </div>
+       
+       
+     
+          
+            <div class="container my-2">
+<u style="text-align: center
+;font-family: ui-monospace;"><h3 >Similar Posts</h3></u>
+            <div class="row">
+                {% for blogs in all_blogs %}
+
+                    <div class="col-sm-6 mt-1">
+                        <div class="card">
+                            <div class="card-body">
+                                <h5 class="card-title">{{ blogs.name }}</h5>
+                                <span class="badge bg-success">{{blogs.author}}</span>
+                                <p class="card-text">
+                                    {{blogs.mini_description| truncatechars:200}}
+                                </p>
+                                <a href="{% url 'blog_detail' blog.slug %}" class="btn btn-primary"><i class="fa-brands fa-readme"></i> Read More</a>
+                            </div>
+                        </div>
+                    </div>
+                    {% endfor %}
+               
+            </div>
+            </div>
+        
+
+            <footer>
+                <div class="container">
+                  <div class="row">
+              
+                    <div class="col-lg-12">
+                      <div class="copyright-text">
+                        <p>Copyright 2022 All Right Reserved!
+              
+                          | Design & Developed BY: <a rel="nofollow" href="https://rajkumarayal.com.np">Rajkumar Aryal</a></p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </footer>
+<script>
+    var name = "{{ user.id }}"
+    var blog = "{{ blog.id }}"
+    document.getElementById("author").value = name;
+    document.getElementById("blog").value = blog;
+</script>
+{% endblock content %}
